@@ -12,7 +12,7 @@ def log(usuario, perfil, autorizado):
         "autorizado": autorizado
         
     }
-    with open('Seguridad/scripts/valida_acceso.csv', 'a+') as f:
+    with open('scripts/valida_acceso.csv', 'a+') as f:
         f.write('{fecha}\t{usuario}\t{perfil}\t{autorizado}'.format(fecha=datetime.now(
         ).isoformat(), usuario=log_entry.get('usuario'), perfil=log_entry.get('perfil'), autorizado=log_entry.get('autorizado')) + '\n')
     return f'Logged message: {json.dumps(log_entry)}'

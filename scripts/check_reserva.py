@@ -15,7 +15,7 @@ def log(id, date, id_reserva, estado, mensaje):
         "mensaje": mensaje
 
     }
-    with open('Seguridad/scripts/valida_modificacion_reserva.csv', 'a+') as f:
+    with open('scripts/valida_modificacion_reserva.csv', 'a+') as f:
         f.write('{id}\t{fecha}\t{id_reserva}\t{estado}\t{mensaje}'.format(id=id, fecha=datetime.now(
         ).isoformat(), id_reserva=log_entry.get('id_reserva'), estado=log_entry.get('estado'), mensaje=log_entry.get('mensaje')) + '\n')
     return f'Logged message: {json.dumps(log_entry)}'
