@@ -1,0 +1,59 @@
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+__pycache__/
+
+# Virtual environment
+.venv/
+env/
+ENV/
+venv/
+pip-wheel-metadata/
+*.egg-info/
+dist/
+build/
+
+# Environment variables and credentials
+.env
+.env.*
+
+# macOS system files
+.DS_Store
+
+# VSCode settings
+.vscode/
+.settings/
+
+# PyCharm project files
+.idea/
+
+# Test, coverage, and profiling tools
+.coverage
+.coverage.*
+.cache
+pytest_cache/
+tox/
+htmlcov/
+.nox/
+
+# Docker and Compose
+*.local
+docker-compose.override.yml
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Logs
+*.log
+
+# Ignore requirements lock files (if generated on the fly)
+Pipfile.lock
+poetry.lock
+
+# Ignore OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Ignore API and worker compiled files
+api_producer/__pycache__/
+worker_consumer/__pycache__/

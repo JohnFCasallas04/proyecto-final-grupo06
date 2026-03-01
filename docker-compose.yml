@@ -1,0 +1,30 @@
+services:
+  sqs-local:
+    image: softwaremill/elasticmq-native:latest
+    ports:
+      - "9324:9324"
+      - "9325:9325"
+
+  api-producer:
+    build: ./api_producer
+    ports:
+      - "8000:8000"
+    environment:
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      AWS_DEFAULT_REGION: us-east-1
+      SQS_ENDPOINT_URL: http://sqs-local:9324
+      SQS_QUEUE_NAME: ReservasQueue
+    depends_on:
+      - sqs-local
+
+  worker-consumer:
+    build: ./worker_consumer
+    environment:
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      AWS_DEFAULT_REGION: us-east-1
+      SQS_ENDPOINT_URL: http://sqs-local:9324
+      SQS_QUEUE_NAME: ReservasQueue
+    depends_on:
+      - sqs-local
