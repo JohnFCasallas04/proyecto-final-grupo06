@@ -52,7 +52,7 @@ def get_random_user():
     
     
     for user in users:
-            if user.get("perfil") != "viajero" and user.get("perfil") != "hoteles":
+            if user.get("perfil") != "viajero" and user.get("perfil") != "hoteles" and user.get("perfil") != "administrador":
                 users_list.append(user)
             else:
                 users_list_v.append(user)

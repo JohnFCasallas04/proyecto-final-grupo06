@@ -16,14 +16,14 @@ users = [
         "name": "Diego",
         "email": "diego@uniandes.edu.co",
         "password": "5678",
-        "perfil": "administrador"
+        "perfil": "espectador"
     },
     {
         "id": 3,
         "name": "Jose",
         "email": "jose@uniandes.edu.co",
         "password": "9012",
-        "perfil": "viajero"
+        "perfil": "administrador"
     },
     {
         "id": 4,

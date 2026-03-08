@@ -27,7 +27,7 @@ class Reserva(Resource):
             return jsonify({"message": "User profile not found"})
         # Validación del tipo de usuario
         # intruder = suspectUser(current_user)
-        if perfil != "viajero" and perfil != "hoteles":
+        if perfil != "viajero" and perfil != "hoteles" and perfil != "administrador":
             return jsonify({"message": "Unauthorized"})
         # Aquí puedes agregar la lógica para manejar la solicitud GET
         return jsonify({"message": "Authorized", "user": current_user, "perfil": perfil})
