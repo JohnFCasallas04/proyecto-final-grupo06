@@ -24,6 +24,11 @@ def generar_datos_reservas(id, creada=False):
         "id_propiedad": fake.random_int(min=1, max=100),
         "estado": random.choice(estado),
         "codigo_moneda": "USD",
+        "payment": {
+            "card_token": "",
+            "last4": "",
+            "brand": ""
+        },
         "checkSum": ""
     }
 

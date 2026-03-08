@@ -6,6 +6,16 @@ services:
     networks:
       - app_network
 
+  tarjetas:
+    build: ./tarjetas
+    environment:
+      - TOKEN_PEPPER=demo-pepper-change-me
+      - TOKEN_DB_PATH=/data/tarjetas.db
+    volumes:
+      - ./tarjetas/data:/data
+    networks:
+      - app_network
+
   usuarios:
     build: ./usuarios
     depends_on:
@@ -18,6 +28,7 @@ services:
     depends_on:
       - seguridad
       - usuarios
+      - tarjetas
     networks:
       - app_network
       
@@ -31,6 +42,7 @@ services:
         - usuarios
         - seguridad
         - reservas
+        - tarjetas
     networks:
       - app_network
 

@@ -1,7 +1,8 @@
 from flask import Flask, request, jsonify
 from flask_restful import Api, Resource
-from flask_jwt_extended import create_access_token, JWTManager, jwt_required, get_jwt_identity
-from utils import suspectUser, get_user_profile, generate_transaction_hash, generar_datos_reservas
+from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
+import requests
+from utils import get_user_profile, generate_transaction_hash, generar_datos_reservas
 
 app = Flask(__name__)
 app.config["JWT_SECRET_KEY"] = "secret-jwt"  # Change this!
@@ -35,7 +36,39 @@ class Reserva(Resource):
     @jwt_required()
     def put(self, id_reserva):
         # Obtener los datos de la solicitud
-        data = request.get_json()
+        data = request.get_json() or {}
+
+        payment = data.get("payment") or {}
+        card_data = payment.get("card")
+        if card_data:
+            try:
+                token_response = requests.post(
+                    "http://tarjetas:5003/tokenizar", json=card_data, timeout=5
+                )
+            except requests.RequestException:
+                return jsonify({"message": "No fue posible tokenizar la tarjeta"}), 502
+
+            if token_response.status_code != 200:
+                try:
+                    response_json = token_response.json()
+                except ValueError:
+                    response_json = {}
+                return jsonify({"message": response_json.get("message", "Error de tokenizacion")}), 400
+
+            tokenized = token_response.json()
+            data["payment"] = {
+                "card_token": tokenized.get("card_token"),
+                "last4": tokenized.get("last4"),
+                "brand": tokenized.get("brand")
+            }
+        else:
+            current_payment = payment if isinstance(payment, dict) else {}
+            data["payment"] = {
+                "card_token": current_payment.get("card_token", ""),
+                "last4": current_payment.get("last4", ""),
+                "brand": current_payment.get("brand", "")
+            }
+
         new_check = generate_transaction_hash(data)
 
         # Buscar la reserva con el id_reserva proporcionado
@@ -52,6 +85,7 @@ class Reserva(Resource):
             'id_propiedad': data.get('id_propiedad'),
             'codigo_moneda': data.get('codigo_moneda'),
             'estado': data.get('estado'),
+            'payment': data.get('payment')
         }
 
         # Lógica para manejar las reservas en diferentes estados
