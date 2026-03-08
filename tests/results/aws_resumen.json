@@ -1,0 +1,89 @@
+{
+  "experimento": "Escalabilidad AWS Fargate + SQS",
+  "fecha": "2026-03-08",
+  "alb": "sqs-experiment-alb-1203634376.us-east-1.elb.amazonaws.com",
+  "autoscaling_actividades": [
+    {
+      "hora": "23:51",
+      "accion": "1 \u2192 2 tareas"
+    },
+    {
+      "hora": "23:53",
+      "accion": "2 \u2192 3 tareas"
+    },
+    {
+      "hora": "23:55",
+      "accion": "3 \u2192 4 tareas"
+    },
+    {
+      "hora": "23:56",
+      "accion": "4 \u2192 5 tareas"
+    },
+    {
+      "hora": "23:58",
+      "accion": "5 \u2192 7 tareas"
+    },
+    {
+      "hora": "00:00",
+      "accion": "7 \u2192 10 tareas (m\u00e1ximo)"
+    }
+  ],
+  "fases": [
+    {
+      "fase": "01_base",
+      "total_requests": 150,
+      "success_202": 150,
+      "failures": 0,
+      "success_rate_pct": 100.0,
+      "latency_avg_ms": 108.3,
+      "latency_p50_ms": 98,
+      "latency_p90_ms": 117,
+      "latency_p95_ms": 172,
+      "latency_p99_ms": 242,
+      "latency_max_ms": 588,
+      "duration_ms": 79084
+    },
+    {
+      "fase": "02_rampa",
+      "total_requests": 400,
+      "success_202": 400,
+      "failures": 0,
+      "success_rate_pct": 100.0,
+      "latency_avg_ms": 99.8,
+      "latency_p50_ms": 97,
+      "latency_p90_ms": 108,
+      "latency_p95_ms": 123,
+      "latency_p99_ms": 143,
+      "latency_max_ms": 398,
+      "duration_ms": 107424
+    },
+    {
+      "fase": "03_pico",
+      "total_requests": 4000,
+      "success_202": 4000,
+      "failures": 0,
+      "success_rate_pct": 100.0,
+      "latency_avg_ms": 99.3,
+      "latency_p50_ms": 96,
+      "latency_p90_ms": 106,
+      "latency_p95_ms": 123,
+      "latency_p99_ms": 154,
+      "latency_max_ms": 295,
+      "duration_ms": 762766
+    },
+    {
+      "fase": "04_reduccion",
+      "total_requests": 150,
+      "success_202": 150,
+      "failures": 0,
+      "success_rate_pct": 100.0,
+      "latency_avg_ms": 100.3,
+      "latency_p50_ms": 97,
+      "latency_p90_ms": 103,
+      "latency_p95_ms": 115,
+      "latency_p99_ms": 137,
+      "latency_max_ms": 382,
+      "duration_ms": 77849
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "info": {
+    "name": "TravelHub - Experimento Escalabilidad",
+    "_postman_id": "exp-escalabilidad-001",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/health"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('API is healthy', function () {",
+              "  pm.response.to.have.status(200);",
+              "  var json = pm.response.json();",
+              "  pm.expect(json.status).to.eql('healthy');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Enviar Pago",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/v1/payments",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"amount\": {{amount}}, \"currency\": \"{{currency}}\", \"stress_time\": {{stress_time}}}"
+        }
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (!pm.variables.get('amount')) {",
+              "  pm.variables.set('amount', (Math.random() * 500 + 10).toFixed(2));",
+              "}",
+              "if (!pm.variables.get('currency')) {",
+              "  var currencies = ['USD', 'EUR', 'COP', 'MXN'];",
+              "  pm.variables.set('currency', currencies[Math.floor(Math.random() * currencies.length)]);",
+              "}",
+              "if (!pm.variables.get('stress_time')) {",
+              "  pm.variables.set('stress_time', (Math.random() * 1.5 + 0.5).toFixed(1));",
+              "}"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Payment accepted (202)', function () {",
+              "  pm.response.to.have.status(202);",
+              "});",
+              "",
+              "pm.test('Response has transaction_id', function () {",
+              "  var json = pm.response.json();",
+              "  pm.expect(json).to.have.property('transaction_id');",
+              "  pm.expect(json.status).to.eql('processing');",
+              "});",
+              "",
+              "pm.test('Response time < 2000ms', function () {",
+              "  pm.expect(pm.response.responseTime).to.be.below(2000);",
+              "});"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
