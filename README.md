@@ -156,8 +156,6 @@ Ver la guia completa en [`docs_guia_local.md`](docs_guia_local.md).
 **Autoescalado:** el servicio worker escalo de **1 a 10 tareas** automaticamente en ~9 min.  
 **Backlog:** absorbio hasta 1 067 mensajes y lo dreno a **0** al llegar a 10 tareas.
 
-Ver informe completo en [`tests/results/informe_experimento_aws.md`](tests/results/informe_experimento_aws.md).
-
 ---
 
 ## Documentacion
