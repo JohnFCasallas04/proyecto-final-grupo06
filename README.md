@@ -166,4 +166,3 @@ Ver informe completo en [`tests/results/informe_experimento_aws.md`](tests/resul
 |---|---|
 | [`docs_experimento_escalabilidad_aws.md`](docs_experimento_escalabilidad_aws.md) | Guia completa del experimento en AWS (objetivo, arquitectura, pasos, monitoreo) |
 | [`docs_guia_local.md`](docs_guia_local.md) | Guia para replicar el experimento en local con Docker Compose |
-| [`tests/results/informe_experimento_aws.md`](tests/results/informe_experimento_aws.md) | Informe de resultados: hipotesis, decisiones de arquitectura y evidencias |
